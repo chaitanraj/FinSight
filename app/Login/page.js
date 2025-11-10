@@ -3,8 +3,52 @@ import { Github, Apple } from 'lucide-react';
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
 import { motion } from 'framer-motion';
+import Link from "next/link";
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { toast } from "react-toastify";
 
 function LoginPage() {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const router = useRouter();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (!email || !password) {
+            alert("Please fill in all fields");
+            return;
+        }
+
+        // setLoading(true);
+        try {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/login`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify({ email, password }),
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+                console.log("Login successful:", data);
+                console.log("Name: ",data.user.name)
+                // toast.success(`Welcome ${data.user.name}`);
+                  toast.success(`Welcome ${data.user.name}`);
+
+                router.push("/");
+            } else {
+                alert(data?.message || "Login failed");
+            }
+        } catch (err) {
+            console.error("Error:", err);
+            alert("Server error");
+        }
+    };
+
+
+
     return (
         <div className="min-h-screen bg-gradient-to-br flex items-center justify-center px-4 py-12">
             <div className="w-full max-w-6xl">
@@ -54,7 +98,7 @@ function LoginPage() {
                             </div>
 
                             {/* Login Form */}
-                            <form className="space-y-4">
+                            <form className="space-y-4" onSubmit={handleSubmit}>
                                 <div>
                                     <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
                                         Email Address
@@ -62,6 +106,8 @@ function LoginPage() {
                                     <input
                                         type="email"
                                         id="email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
                                         className="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
                                         placeholder="you@example.com"
                                     />
@@ -72,23 +118,20 @@ function LoginPage() {
                                         <label htmlFor="password" className="block text-sm font-medium text-gray-300">
                                             Password
                                         </label>
-                                        <a href="#" className="text-xs text-emerald-400 hover:text-emerald-300">
-                                            Forgot password?
-                                        </a>
                                     </div>
                                     <input
                                         type="password"
                                         id="password"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
                                         className="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
                                         placeholder="••••••••"
                                     />
                                 </div>
 
-                              
-
                                 <button
                                     type="submit"
-                                    className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200 shadow-lg shadow-emerald-500/20 mt-6"
+                                    className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3 px-4 rounded-lg shadow-lg shadow-emerald-500/20 mt-6 transition-transform duration-200 hover:scale-105 active:scale-95 cursor-pointer"
                                 >
                                     Login
                                 </button>
@@ -98,9 +141,9 @@ function LoginPage() {
                             <div className="mt-6 text-center">
                                 <p className="text-gray-400">
                                     Don't have an account?{' '}
-                                    <a href="#" className="text-emerald-400 hover:text-emerald-300 font-semibold">
-                                        Sign up now
-                                    </a>
+                                    <Link href="/Signup" className="text-emerald-400 hover:text-emerald-300 font-semibold">
+                                        SignUp now!
+                                    </Link>
                                 </p>
                             </div>
                         </div>

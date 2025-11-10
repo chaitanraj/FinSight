@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 
+
 const page = () => {
   const [activeItem, setactiveItem] = useState('');
   const navItems = ["About", "Contact", "DashBoard"];
@@ -67,11 +68,13 @@ const page = () => {
               ))}
             </div>
             <div className="flex items-center h-full">
+              <Link href="/Signup" className='cursor-pointer'>
               <button className="relative px-6 py-2.5 bg-gradient-to-r cursor-pointer from-emerald-600 to-emerald-700 rounded-xl font-medium overflow-hidden group transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/50 hover:scale-105 active:scale-95">
                 <span className="relative z-10">Login/Signup</span>
                 <span className="absolute inset-0 bg-gradient-to-r from-emerald-500 to-emerald-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                 <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity duration-300"></span>
               </button>
+              </Link>
             </div>
           </div>
         </div>

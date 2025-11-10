@@ -1,10 +1,49 @@
 "use client";
 import { Apple } from 'lucide-react';
-import { FcGoogle } from "react-icons/fc"; // Full-color Google logo
+import { FcGoogle } from "react-icons/fc";
+import Link from "next/link";
 import { FaApple } from "react-icons/fa";
 import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { toast } from "react-toastify";
 
 function SignupPage() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const router=useRouter();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!name || !email || !password) {
+      toast.warn("Please fill in all fields");
+      return;
+    }
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/signup`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({name, email, password }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        console.log("Signup successful:", data);
+        toast.success('Account Created!!');
+
+        router.push("/");
+      } else {
+        alert(data?.message || "Login failed");
+      }
+    } catch (err) {
+      console.error("Error:", err);
+      alert("Server error");
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-6xl">
@@ -30,10 +69,6 @@ function SignupPage() {
 
               {/* Social Login Buttons */}
               <div className="space-y-3 mb-6">
-                {/* <button className="w-full flex items-center justify-center gap-3 bg-gray-900 hover:bg-black text-white font-semibold py-3 px-4 rounded-lg border border-gray-700 transition-colors duration-200">
-                  <Github className="w-5 h-5" />
-                  Continue with GitHub
-                </button> */}
                 <button className="w-full flex items-center justify-center gap-3 bg-gray-900 hover:bg-black text-white font-semibold py-3 px-4 rounded-lg border border-gray-700 transition-colors duration-200">
                   <FcGoogle className="w-5 h-5" />
                   Continue with Google
@@ -57,7 +92,7 @@ function SignupPage() {
               </div>
 
               {/* Signup Form */}
-              <form className="space-y-4">
+              <form className="space-y-4" onSubmit={handleSubmit}>
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
                     Full Name
@@ -67,6 +102,8 @@ function SignupPage() {
                     id="name"
                     className="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
                     placeholder="John Doe"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                   />
                 </div>
 
@@ -79,6 +116,7 @@ function SignupPage() {
                     id="email"
                     className="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
                     placeholder="you@example.com"
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
 
@@ -91,12 +129,12 @@ function SignupPage() {
                     id="password"
                     className="w-full px-4 py-3 bg-gray-900/50 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
                     placeholder="••••••••"
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
-
                 <button
                   type="submit"
-                  className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-200 shadow-lg shadow-emerald-500/20 mt-6"
+                  className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-3 px-4 rounded-lg transition-transform duration-200 hover:scale-105 active:scale-95 cursor-pointer shadow-lg shadow-emerald-500/20 mt-6"
                 >
                   Create Account
                 </button>
@@ -118,9 +156,9 @@ function SignupPage() {
               <div className="mt-6 text-center">
                 <p className="text-gray-400">
                   Already have an account?{' '}
-                  <a href="#" className="text-emerald-400 hover:text-emerald-300 font-semibold">
+                  <Link href="/Login" className="text-emerald-400 hover:text-emerald-300 font-semibold">
                     Login now
-                  </a>
+                  </Link>
                 </p>
               </div>
             </div>

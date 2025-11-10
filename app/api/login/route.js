@@ -39,7 +39,7 @@ export async function POST(req) {
       maxAge: 7 * 24 * 60 * 60, 
     });
 
-    return NextResponse.json({ message: "Login successful" });
+    return NextResponse.json({ message: "Login successful", user: { name: user.name, email: user.email } });
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
