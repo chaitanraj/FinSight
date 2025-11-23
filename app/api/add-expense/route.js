@@ -1,4 +1,3 @@
-// app/api/add-expense/route.js
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
@@ -6,13 +5,13 @@ export async function POST(req) {
   try {
     const body = await req.json();
 
-    if (!body.merchant || !body.amount) {
+    if (!body.merchant || !body.amount)
+    {
       return NextResponse.json(
         { error: "merchant and amount required" },
         { status: 400 }
       );
     }
-
     const expense = await prisma.expense.create({
       data: {
         userId: body.userId ? Number(body.userId) : null,
