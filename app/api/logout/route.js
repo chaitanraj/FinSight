@@ -4,7 +4,7 @@ export async function POST() {
   try {
     console.log("🔥 Logout route hit!");
 
-    // Create a NextResponse object
+    
     const response = NextResponse.json({
       message: "Logged out successfully",
     });
@@ -16,8 +16,8 @@ export async function POST() {
       path: "/",
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "lax", // use "none" if cross-site requests are needed
-      expires: new Date(0), // expire immediately
+      sameSite: "lax", 
+      expires: new Date(0),
     });
 
     return response;
