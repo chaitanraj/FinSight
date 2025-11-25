@@ -8,7 +8,7 @@ import { AuthContext } from "@/context/AuthContext";
 
 const page = () => {
   const [activeItem, setactiveItem] = useState('');
-  const navItems = ["About", "Contact", "DashBoard"];
+  const navItems = ["About", "Contact", "Dashboard"];
   const navRef = useRef(null);
   const router = useRouter();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);

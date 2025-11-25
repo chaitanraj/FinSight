@@ -7,16 +7,11 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { CalendarIcon } from "lucide-react";
 
 export default function AddExpenseModal({open,onClose}) {
-  // const [isOpen, setIsOpen] = useState(true);
   const [merchant, setMerchant] = useState('');
   const [amount, setAmount] = useState('');
   const [date, setDate] = useState('');
   const [category, setCategory] = useState('');
   const [notes, setNotes] = useState('');
-
-  // const handleClose = () => {
-  //   setIsOpen(false);
-  // };
 
   const handleAddExpense = () => {
     console.log({ merchant, amount, date, category, notes });

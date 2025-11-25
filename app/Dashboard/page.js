@@ -151,9 +151,6 @@ const RecentExpenseRow = ({ date, merchant, amount, category, categoryColor }) =
   </motion.div>
 );
 
-
-
-
 export default function Dashboard() {
   const [expenses, setExpenses] = useState([]);
   const [isAddExpenseOpen, setIsAddExpenseOpen] = useState(false);
@@ -341,7 +338,7 @@ export default function Dashboard() {
                   transition={{ delay: 0.4 + index * 0.1 }}
                   whileHover={{ scale: 1.02 }}
                   className={`p-4 rounded-xl border ${insight.type === 'warning'
-                      ? 'bg-yellow-500/10 border-yellow-500/30'
+                      ? 'bg-red-500/20 border-red-500/30'
                       : insight.type === 'success'
                         ? 'bg-emerald-500/10 border-emerald-500/30'
                         : 'bg-blue-500/10 border-blue-500/30'
