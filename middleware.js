@@ -6,6 +6,6 @@ export function middleware(request) {
   }
  
   if (request.nextUrl.pathname.startsWith('/dashboard')) {
-    return NextResponse.redirect(new URL('/', request.url))
+    return NextResponse.redirect(new URL('/Login', request.url))
   }
 }
