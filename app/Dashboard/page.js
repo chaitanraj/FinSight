@@ -24,6 +24,7 @@ import {
   HelpCircle
 } from "lucide-react";
 import AddExpenseModal from '@/components/AddExpenseModal/page'
+import { getexpense } from '@/lib/getexpense';
 
 const PieChart = ({ data, total }) => {
   const [hoveredSegment, setHoveredSegment] = useState(null);
@@ -109,25 +110,25 @@ const PieChart = ({ data, total }) => {
   );
 };
 
-const ExpenseTypeCard = ({ icon: Icon, label, amount, color }) => (
-  <motion.div
-    whileHover={{ scale: 1.02, y: -2 }}
-    className="bg-gray-900/50 backdrop-blur border border-gray-800 rounded-xl p-4 hover:border-emerald-500/30 transition-all cursor-pointer"
-  >
-    <div className="flex items-center justify-between">
-      <div className="flex items-center gap-3">
-        <div className={`w-10 h-10 rounded-lg ${color} bg-opacity-10 flex items-center justify-center`}>
-          <Icon className={`w-5 h-5 ${color.replace('bg-', 'text-')}`} />
-        </div>
-        <div>
-          <p className="text-sm text-gray-400">{label}</p>
-          <p className="text-lg font-semibold text-white">${amount.toLocaleString()}</p>
-        </div>
-      </div>
-      <ArrowUpRight className="w-4 h-4 text-gray-600" />
-    </div>
-  </motion.div>
-);
+// const ExpenseTypeCard = ({ icon: Icon, label, amount, color }) => (
+//   <motion.div
+//     whileHover={{ scale: 1.02, y: -2 }}
+//     className="bg-gray-900/50 backdrop-blur border border-gray-800 rounded-xl p-4 hover:border-emerald-500/30 transition-all cursor-pointer"
+//   >
+//     <div className="flex items-center justify-between">
+//       <div className="flex items-center gap-3">
+//         <div className={`w-10 h-10 rounded-lg ${color} bg-opacity-10 flex items-center justify-center`}>
+//           <Icon className={`w-5 h-5 ${color.replace('bg-', 'text-')}`} />
+//         </div>
+//         <div>
+//           <p className="text-sm text-gray-400">{label}</p>
+//           <p className="text-lg font-semibold text-white">${amount.toLocaleString()}</p>
+//         </div>
+//       </div>
+//       <ArrowUpRight className="w-4 h-4 text-gray-600" />
+//     </div>
+//   </motion.div>
+// );
 
 const RecentExpenseRow = ({ date, merchant, amount, category, categoryColor }) => (
   <motion.div
@@ -165,20 +166,27 @@ export default function Dashboard() {
     categoryBreakdown: []
   });
 
+  // export async function fetchExpense() {
+  //   try {
+  //     const res = await fetch('/api/get-expense');
+
+  //     if (!res.ok) return null;
+  //     const data = await res.json();
+  //     setExpenses(data);
+  //     return data;
+
+  //   } catch (err) {
+  //     console.log("Error fetching /api/get-expense:", err);
+  //     return null;
+  //   }
+  // }
+
   async function fetchExpense() {
-    try {
-      const res = await fetch('/api/get-expense');
-
-      if (!res.ok) return null;
-      const data = await res.json();
-      setExpenses(data);
-      return data;
-
-    } catch (err) {
-      console.log("Error fetching /api/get-expense:", err);
-      return null;
-    }
+    const data = await getexpense();
+    if (data) setExpenses(data);
+    return data;
   }
+
   useEffect(() => {
     fetchExpense();
   }, []);
@@ -241,11 +249,6 @@ export default function Dashboard() {
       chartColor: "#6b7280"
     }
   };
-
-  useEffect(() => {
-    loadExpenses();
-  }, []);
-
   const loadExpenses = async () => {
     const total = expenses.reduce((sum, exp) => sum + exp.amount, 0);
 
@@ -266,6 +269,12 @@ export default function Dashboard() {
       categoryBreakdown: breakdown
     });
   };
+
+  useEffect(() => {
+    loadExpenses();
+  }, [expenses]);
+
+
 
   const aiInsights = [
     {
@@ -455,7 +464,7 @@ export default function Dashboard() {
         >
           <div className="bg-gray-900/50 backdrop-blur border border-gray-800 rounded-2xl p-6">
             <h3 className="text-xl font-semibold text-white mb-6">Recent Expenses</h3>
-            <div className="space-y-3">
+            <div className="space-y-3 max-h-[400px] overflow-y-auto pr-2 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-gray-700 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:hover:bg-gray-600">
               {expenses.map((expense, index) => (
                 <motion.div
                   key={expense.id}
@@ -468,7 +477,7 @@ export default function Dashboard() {
                       month: "short",
                       day: "numeric"
                     })}
-                    merchant={expense.merchant}
+                    merchant={capitalize(expense.merchant)}
                     amount={expense.amount}
                     category={capitalize(expense.category)}
                     categoryColor={`${categoryConfig[expense.category]?.color} bg-opacity-20 text-white`}

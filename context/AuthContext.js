@@ -3,6 +3,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
 export const AuthContext = createContext();
+
 export const currencies = [
   { code: 'INR', symbol: '₹', name: 'Indian Rupee' },
   { code: 'USD', symbol: '$', name: 'US Dollar' },
