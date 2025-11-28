@@ -6,7 +6,6 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { toast } from "react-toastify";
 import { CalendarIcon } from "lucide-react";
-import { getexpense } from '@/lib/getexpense';
 import { AuthContext } from '@/context/AuthContext';
 
 export default function AddExpenseModal({ open, onClose }) {
