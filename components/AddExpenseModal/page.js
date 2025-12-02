@@ -56,7 +56,6 @@ export default function AddExpenseModal({ open, onClose }) {
   }
 
  async function handleAddExpense() {
-  // ✅ ADD: Check if user is logged in
   if (!user?.id) {
     toast.error("You must be logged in to add expenses");
     return;
@@ -117,12 +116,13 @@ export default function AddExpenseModal({ open, onClose }) {
           {/* Merchant */}
           <div>
             <label className="block text-slate-300 text-sm mb-2">
-              Merchant
+              Description
             </label>
             <input
               type="text"
               value={merchant}
               onChange={handleMerchantChange}
+              placeholder="e.g., Pizza, Uber Ride, Movie"
               className="w-full bg-slate-800 text-white text-sm px-4 py-3 rounded-lg border border-slate-700 focus:outline-none focus:border-slate-600 transition-colors"
             />
           </div>

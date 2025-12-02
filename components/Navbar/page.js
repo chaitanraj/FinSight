@@ -58,7 +58,8 @@ const page = () => {
           <div className="flex items-center h-full justify-between text-white px-6">
             <div className='flex items-center h-full'>
               <Link href="/" className='cursor-pointer'>
-                <img
+              {/* <Image */}
+                <Image
                   src={"/logo.png"}
                   alt="FinSight Logo"
                   className='h-25 w-auto object-contain transition-transform duration-300 hover:scale-105'

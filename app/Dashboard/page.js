@@ -1,5 +1,6 @@
 'use client';
-import { useState, useEffect, useContext, useMemo } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Plus,
@@ -27,6 +28,7 @@ import {
 import AddExpenseModal from '@/components/AddExpenseModal/page'
 import { AuthContext } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
+
 
  
 const PieChart = ({ data, total }) => {
@@ -162,28 +164,12 @@ export default function Dashboard() {
   const { getexpense, expenses, isAuthChecking, user } = useContext(AuthContext);
   const router = useRouter();
   const [isAddExpenseOpen, setIsAddExpenseOpen] = useState(false);
-  if (isAuthChecking) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-950">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-400 text-lg">Loading...</p>
-        </div>
-      </div>
-    );
-  }
   
-  if (!user) {
-    router.push('/Login');
-    return null;
-  }
-
-
-  function capitalize(str) {
-    if (!str) return "";
-    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-  }
-
+    useEffect(() => {
+    if (!isAuthChecking && !user) {
+      router.push('/Login');
+    }
+  }, [isAuthChecking, user]);
 
   const categoryConfig = {
     Groceries: {
@@ -237,7 +223,8 @@ export default function Dashboard() {
       chartColor: "#6b7280"
     }
   };
-  const stats = useMemo(() => {
+  
+   const stats = useMemo(() => {
     if (!expenses || expenses.length === 0) {
       return {
         totalSpending: 0,
@@ -245,11 +232,7 @@ export default function Dashboard() {
         categoryBreakdown: []
       };
     }
-
-
     const total = expenses.reduce((sum, exp) => sum + exp.amount, 0);
-
-
     const categoryTotals = expenses.reduce((acc, exp) => {
       acc[exp.category] = (acc[exp.category] || 0) + exp.amount;
       return acc;
@@ -270,9 +253,29 @@ export default function Dashboard() {
   }, [expenses]);
 
 
+  if (isAuthChecking) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-950">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-400 text-lg">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return null;
+  }
 
 
+  function capitalize(str) {
+    if (!str) return "";
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  }
 
+
+  
 
   const aiInsights = [
     {
