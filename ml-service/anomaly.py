@@ -3,7 +3,7 @@ import pandas as pd
 from sklearn.ensemble import IsolationForest
 from typing import List, Dict, Any
 
-def detect_anomaly(expenses: List[Dict[str, Any]]) -> Dict:
+def detect_anomaly_model(expenses: List[Dict[str, Any]]) -> Dict:
     if not expenses:
         return {"error": "no_data"}
     
@@ -26,7 +26,7 @@ def detect_anomaly(expenses: List[Dict[str, Any]]) -> Dict:
             "reason": "Isolation Forest requires at least ~10 samples"
         }
     
-    model = IsolationForest(contamination=0.1, random_state=42)
+    model = IsolationForest(contamination=0.2, random_state=42)
     model.fit(daily[["amount"]])
     
     daily["anomaly"] = model.predict(daily[["amount"]])

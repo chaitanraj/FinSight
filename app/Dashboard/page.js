@@ -404,7 +404,7 @@ export default function Dashboard() {
           <div className="bg-gray-900/50 backdrop-blur border border-gray-800 rounded-2xl p-6">
             <div className="flex items-center gap-3 mb-6">
               <Sparkles className="w-6 h-6 text-emerald-400" />
-              <h3 className="text-xl font-semibold text-white">Finsight AI Insights</h3>
+              <h3 className="text-xl font-semibold text-white">FinSight-AI AI Insights</h3>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {aiInsights.map((insight, index) => (

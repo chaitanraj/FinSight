@@ -6,7 +6,7 @@ from predictor import (
     monthly_predict,
     category_predict
 )
-from anomaly import detect_anomaly
+from anomaly import detect_anomaly_model
 
 app = Flask(__name__)
 CORS(app)
@@ -65,7 +65,7 @@ def forecast_daily():
         return jsonify({"error": str(e)}), 500
 
 
-@app.route("/detect/anomaly", methods=["POST"])
+@app.route("/anomaly", methods=["POST"])
 def detect_anomaly():
     try:
         data = request.get_json()
@@ -74,7 +74,7 @@ def detect_anomaly():
         if not expenses:
             return jsonify({"error": "expenses_required"}), 400
 
-        result = detect_anomaly(expenses)
+        result = detect_anomaly_model(expenses)
         return jsonify(result), 200
 
     except Exception as e:

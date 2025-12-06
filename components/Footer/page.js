@@ -26,7 +26,7 @@ const Footer = () => {
                                         <DollarSign className="w-4 h-4 text-white" />
                                     </div>
                                     <h2 className="text-xl font-bold bg-gradient-to-r from-emerald-400 via-emerald-300 to-emerald-500 bg-clip-text text-transparent">
-                                        FinSight
+                                        FinSight-AI
                                     </h2>
                                 </div>
                                 <p className="text-gray-300 leading-relaxed max-w-lg text-md font-[500]">
@@ -68,7 +68,7 @@ const Footer = () => {
                                     </div>
                                     <div>
                                         <p className="text-emerald-400 font-medium text-xs">Email Us</p>
-                                        <p className="text-gray-300 text-xs">support@finsight.com</p>
+                                        <p className="text-gray-300 text-xs">support@FinSight-AI.com</p>
                                     </div>
                                 </div>
                             </div>
@@ -104,7 +104,7 @@ const Footer = () => {
                         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent"></div>
                         <div className="flex flex-col md:flex-row justify-between items-center space-y-1 md:space-y-0">
                             <p className="text-gray-400 font-medium text-xs">
-                                © 2025 FinSight. All Rights Reserved.
+                                © 2025 FinSight-AI. All Rights Reserved.
                             </p>
                             <p className="text-gray-400 text-xs">
                                 Designed And Developed By{' '}

@@ -60,8 +60,8 @@ const page = () => {
               <Link href="/" className='cursor-pointer'>
               {/* <Image */}
                 <Image
-                  src={"/logo.png"}
-                  alt="FinSight Logo"
+                  src={"/logo2.png"}
+                  alt="FinSight-AI Logo"
                   className='h-25 w-auto object-contain transition-transform duration-300 hover:scale-105'
                   width={120}
                   height={70}
@@ -127,7 +127,7 @@ const page = () => {
                       </button>
                       
                       {/* Settings Button */}
-                      <button
+                      {/* <button
                         onClick={() => {
                           setShowSettings(true);
                           setIsDropdownOpen(false);
@@ -137,7 +137,7 @@ const page = () => {
                         <Settings className="w-4 h-4" />
                         <span className="font-medium">Settings</span>
                       </button>
-                      
+                       */}
                       <button
                         onClick={handleLogout}
                         disabled={loggingOut}

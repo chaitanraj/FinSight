@@ -316,7 +316,7 @@ export default function Home() {
           <div className="text-center mb-16">
             <p className="text-emerald-500 font-semibold mb-3">WHY THOUSANDS TRUST US</p>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
-              Why Thousands Trust FinSight
+              Why Thousands Trust FinSight-AI
             </h2>
             <p className="text-gray-400 max-w-2xl mx-auto">
               Eliminate time-consuming manual calculations and empower teams with advanced insights
@@ -377,7 +377,7 @@ export default function Home() {
             <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-4">
             {[
               {
-                question: 'What services does FinSight offer?',
+                question: 'What services does FinSight-AI offer?',
                 answer: 'We offer a range of financial management services including expense tracking, budget planning, real-time financial insights, multi-account support, and automated calculations to help you achieve your financial goals.'
               },
               {
@@ -393,7 +393,7 @@ export default function Home() {
             //     answer: 'Yes! We have helped thousands of users achieve their financial goals. Check out our success stories and testimonials from satisfied customers who have transformed their financial management.'
             //   },
               {
-                question: 'How do I get started with FinSight?',
+                question: 'How do I get started with FinSight-AI?',
                 answer: 'Getting started is simple. Click the "Get Started" button, create your free account, connect your financial accounts, and you\'re ready to go. No credit card required for the basic plan.'
               },
             //   {
@@ -402,11 +402,11 @@ export default function Home() {
             //   },
               {
                 question: 'What industries do you work with?',
-                answer: 'FinSight works with individuals, freelancers, small businesses, and enterprises across all industries. Whether you\'re managing personal finances or business accounts, our platform adapts to your needs.'
+                answer: 'FinSight-AI works with individuals, freelancers, small businesses, and enterprises across all industries. Whether you\'re managing personal finances or business accounts, our platform adapts to your needs.'
               },
               {
                 question: 'How can I contact you?',
-                answer: 'You can reach us through our contact form, email us at support@finsight.com, or use the live chat feature in your dashboard. Our support team is available 24/7 to assist you.'
+                answer: 'You can reach us through our contact form, email us at support@FinSight-AI.com, or use the live chat feature in your dashboard. Our support team is available 24/7 to assist you.'
               }
             ].map((faq, i) => (
               <div
