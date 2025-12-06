@@ -1,9 +1,10 @@
+# prophet model 
 import pandas as pd
 from prophet import Prophet
 from typing import List, Dict, Any
 
 
-def prepare_daily_series(expenses: List[Dict[str, Any]]) -> pd.DataFrame:
+def daily_series(expenses: List[Dict[str, Any]]) -> pd.DataFrame:
     if not expenses:
         return pd.DataFrame(columns=["ds", "y"])
     
@@ -43,7 +44,7 @@ def fit_and_forecast(daily_df: pd.DataFrame, periods: int = 30) -> Dict:
     return result
 
 
-def compute_next_month_summary(expenses: List[Dict[str, Any]]) -> Dict:
+def monthly_predict(expenses: List[Dict[str, Any]]) -> Dict:
     if not expenses:
         return {"error": "no_data"}
     
@@ -82,7 +83,7 @@ def compute_next_month_summary(expenses: List[Dict[str, Any]]) -> Dict:
     }
 
 
-def compute_category_level_forecasts(expenses: List[Dict[str, Any]]) -> Dict:
+def category_predict(expenses: List[Dict[str, Any]]) -> Dict:
     if not expenses:
         return {"error": "no_data"}
     
@@ -99,7 +100,7 @@ def compute_category_level_forecasts(expenses: List[Dict[str, Any]]) -> Dict:
     
     for cat in categories:
         df_cat = df[df["category"] == cat]
-        daily = prepare_daily_series(df_cat.to_dict(orient="records"))
+        daily = daily_series(df_cat.to_dict(orient="records"))
         
         if len(daily) < 5:
             result[cat] = {
@@ -125,3 +126,4 @@ def compute_category_level_forecasts(expenses: List[Dict[str, Any]]) -> Dict:
         }
     
     return result
+
