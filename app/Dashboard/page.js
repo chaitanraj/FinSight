@@ -26,11 +26,7 @@ import {
   HelpCircle
 } from "lucide-react";
 import AddExpenseModal from '@/components/AddExpenseModal/page'
-import { AuthContext } from '@/context/AuthContext';
-import { useRouter } from 'next/navigation';
 
-
- 
 const PieChart = ({ data, total }) => {
   const [hoveredSegment, setHoveredSegment] = useState(null);
   
@@ -160,16 +156,8 @@ const RecentExpenseRow = ({ date, merchant, amount, category, categoryColor }) =
   </motion.div>
 );
 
-export default function Dashboard() {
-  const { getexpense, expenses, isAuthChecking, user } = useContext(AuthContext);
-  const router = useRouter();
+export default function Dashboard({user,expenses=[]}) {
   const [isAddExpenseOpen, setIsAddExpenseOpen] = useState(false);
-  
-    useEffect(() => {
-    if (!isAuthChecking && !user) {
-      router.push('/Login');
-    }
-  }, [isAuthChecking, user]);
 
   const categoryConfig = {
     Groceries: {
@@ -252,31 +240,11 @@ export default function Dashboard() {
     };
   }, [expenses]);
 
-
-  if (isAuthChecking) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-950">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-400 text-lg">Loading...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (!user) {
-    return null;
-  }
-
-
   function capitalize(str) {
     if (!str) return "";
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
   }
-
-
   
-
   const aiInsights = [
     {
       type: 'warning',
@@ -318,7 +286,7 @@ export default function Dashboard() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
-          <h2 className="text-4xl font-bold text-white mb-2">Welcome back {user.name}!</h2>
+          <h2 className="text-4xl font-bold text-white mb-2">Welcome back {user?.name || ""}!</h2>
           <p className="text-gray-400 text-lg">Here's a summary of your spending this month</p>
         </motion.div>
 
@@ -404,7 +372,7 @@ export default function Dashboard() {
           <div className="bg-gray-900/50 backdrop-blur border border-gray-800 rounded-2xl p-6">
             <div className="flex items-center gap-3 mb-6">
               <Sparkles className="w-6 h-6 text-emerald-400" />
-              <h3 className="text-xl font-semibold text-white">FinSight-AI AI Insights</h3>
+              <h3 className="text-xl font-semibold text-white">FinSight-AI Insights</h3>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {aiInsights.map((insight, index) => (
