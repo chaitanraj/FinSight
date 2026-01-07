@@ -29,14 +29,12 @@ export async function POST(req) {
     return NextResponse.json({ error: "text required" }, { status: 400 });
   }
 
-  // 1️⃣ Clean / normalize merchant string
   const cleaned = text
     .toLowerCase()
     .replace(/[^\w\s]/g, "")
     .replace(/[0-9]/g, "")
     .trim();
 
-  // 2️⃣ Few-shot examples → MASSIVE accuracy boost
   const systemPrompt = `
 You are an expert financial transaction classifier.  
 Your job is to choose EXACTLY ONE best-fitting category from this list:
@@ -75,12 +73,12 @@ Return ONLY the category name.
     systemInstruction: { parts: [{ text: systemPrompt }] },
     generationConfig: {
       maxOutputTokens: 5,
-      temperature: 0.0, // deterministic for classification
+      temperature: 0.0,
     },
   };
 
   try {
-    // 3️⃣ Retry logic
+   
     let response;
     for (let attempt = 0; attempt < 3; attempt++) {
       response = await fetch(API_URL, {
@@ -104,12 +102,12 @@ Return ONLY the category name.
 
     generated = generated.trim();
 
-    // Normalize capitalization
+    
     generated =
       generated.charAt(0).toUpperCase() +
       generated.slice(1).toLowerCase();
 
-    // 4️⃣ If model gives unexpected output → fallback to keyword rules
+   
     const fallback = detectCategoryFallback(cleaned);
 
     const finalCategory =
@@ -125,7 +123,6 @@ Return ONLY the category name.
   }
 }
 
-// 5️⃣ Fallback rules for extra accuracy
 function detectCategoryFallback(text) {
   if (text.includes("uber") || text.includes("ola") || text.includes("cab"))
     return "Transport";

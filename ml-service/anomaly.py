@@ -35,7 +35,7 @@ def detect_anomaly_model(expenses: List[Dict[str, Any]]) -> Dict:
     
     anomalies = daily[daily["anomaly"] == -1]
     total_days=len(daily)
-    average=total_spend/total_days
+    average=round(total_spend/total_days)
 
     enriched_anomalies = []
 

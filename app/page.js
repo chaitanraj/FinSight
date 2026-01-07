@@ -32,11 +32,9 @@ export default function Home() {
                   Your Money, Your Control
                 </span>
               </div>
-
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
                 Take Control of Your Financial Future
               </h1>
-
               <p className="text-lg text-gray-300 mb-8 leading-relaxed">
                 Manage your money effortlessly with our AI-powered financial tools. Track spending, budget smartly, and achieve your financial goals faster.
               </p>
