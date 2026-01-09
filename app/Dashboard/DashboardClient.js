@@ -25,6 +25,8 @@ import AddExpenseModal from '@/components/AddExpenseModal/page';
 import ExpenseCalendar from '@/components/GoToCalendar/GoToCalendar';
 import { useRef } from 'react';
 import { timeZoneHelper } from '@/utils/timeZoneHelper';
+import FinSightAI from '@/components/FinSight-AI/MasterCard/MasterCard';
+
 
 
 const categoryConfig = {
@@ -291,24 +293,6 @@ export default function Dashboard({ user, expenses = [] }) {
     router.refresh();
   };
 
-  const aiInsights = [
-    {
-      type: 'warning',
-      message: "You're spending 23% more on Shopping this month compared to last month",
-      icon: TrendingUp
-    },
-    {
-      type: 'success',
-      message: "Great job! Your Food expenses are 15% below your budget",
-      icon: TrendingDown
-    },
-    {
-      type: 'info',
-      message: "Consider setting aside ₹200 more this month to reach your savings goal",
-      icon: Sparkles
-    }
-  ];
-
   return (
     <div>
       <nav className="border-b border-gray-800 backdrop-blur-xl sticky top-0 z-[50]">
@@ -335,7 +319,7 @@ export default function Dashboard({ user, expenses = [] }) {
           <h2 className="text-4xl font-bold text-white mb-2">
             Welcome back {user?.name || ""}!
           </h2>
-          <p className="text-gray-400 text-lg">Here's a summary of your spending this month</p>
+          <p className="text-gray-400 text-lg">Here&apos;s a summary of your spending this month</p>
         </motion.div>
 
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
@@ -415,44 +399,7 @@ export default function Dashboard({ user, expenses = [] }) {
           </motion.div>
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="mb-8"
-        >
-          <div className="bg-gray-900/50 backdrop-blur border border-gray-800 rounded-2xl p-6">
-            <div className="flex items-center gap-3 mb-6">
-              <Sparkles className="w-6 h-6 text-emerald-400" />
-              <h3 className="text-xl font-semibold text-white">FinSight-AI Insights</h3>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {aiInsights.map((insight, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.4 + index * 0.1 }}
-                  whileHover={{ scale: 1.02 }}
-                  className={`p-4 rounded-xl border ${insight.type === 'warning'
-                    ? 'bg-red-500/20 border-red-500/30'
-                    : insight.type === 'success'
-                      ? 'bg-emerald-500/10 border-emerald-500/30'
-                      : 'bg-blue-500/10 border-blue-500/30'
-                    }`}
-                >
-                  <insight.icon className={`w-5 h-5 mb-3 ${insight.type === 'warning'
-                    ? 'text-yellow-400'
-                    : insight.type === 'success'
-                      ? 'text-emerald-400'
-                      : 'text-blue-400'
-                    }`} />
-                  <p className="text-sm text-gray-300 leading-relaxed">{insight.message}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </motion.div>
+      <FinSightAI/>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}

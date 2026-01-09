@@ -72,9 +72,7 @@ export const AuthProvider = ({ children }) => {
   const login = (userData) => {
     setUser(userData);
     setIsLoggedIn(true);
-    console.log("✅ User logged in:", userData.name);
-    // Optionally verify with backend to ensure sync
-    // verifyAuth();
+    console.log(" User logged in:", userData.name);
   };
 
   const logout = async () => {

@@ -183,7 +183,7 @@ function LoginPage() {
                             {/* Signup Link */}
                             <div className="mt-6 text-center">
                                 <p className="text-gray-400">
-                                    Don't have an account?{' '}
+                                    Don&apos;t have an account?{' '}
                                     <Link href="/Signup" className="text-emerald-400 hover:text-emerald-300 font-semibold">
                                         SignUp now!
                                     </Link>

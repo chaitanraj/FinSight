@@ -8,7 +8,7 @@ import { AuthContext } from "@/context/AuthContext";
 import SettingsModal from "@/components/SettingsModal/page"
 import {toast} from 'react-toastify';
 
-const page = () => {
+const Page = () => {
   const [activeItem, setactiveItem] = useState('');
   const navItems = ["About", "Contact", "Dashboard"];
   const navRef = useRef(null);
@@ -171,4 +171,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page
