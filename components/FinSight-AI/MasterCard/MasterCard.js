@@ -1,10 +1,13 @@
 import React, { useContext, useState } from 'react'
-import { TrendingDown, TrendingUp, Sparkles, Type, AlertTriangle, Info } from 'lucide-react';
+import { TrendingDown, TrendingUp, Sparkles, Type, AlertTriangle, Info, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AuthContext } from '@/context/AuthContext';
 import AnomalyCard from '../AnomalyCard/AnomalyCard';
+import InsightModal from '@/modals/InsightModals/InsightModal';
 
 const MasterCard = () => {
+
+  const[selectedInsight,setSelectedInsight]=useState(null);
 
   const INSIGHT_UI = {
     warning: {
@@ -26,8 +29,6 @@ const MasterCard = () => {
       sweep: "via-blue-400/10"
     }
   };
-
-
 
   const [aiInsights, setAiInsights] = useState([]);
 
@@ -194,6 +195,7 @@ const MasterCard = () => {
                     key={index}
                     initial={{ opacity: 0, scale: 0.95, y: 20 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
+                    onClick={() => insight.meta && setSelectedInsight(insight)}
                     transition={{
                       delay: 0.1 * index,
                       type: "spring",
@@ -205,7 +207,7 @@ const MasterCard = () => {
                       y: -4,
                       transition: { duration: 0.2 }
                     }}
-                    className={`p-4 rounded-xl border relative overflow-hidden ${ui.bg}`}
+                    className={`p-4 rounded-xl border relative overflow-hidden cursor-pointer ${ui.bg}`}
                   >
                     <motion.div
                       initial={{ x: '-100%' }}
@@ -216,10 +218,10 @@ const MasterCard = () => {
                         repeat: 0,
                       }}
                       className={`absolute inset-0 ${insight.type === 'warning'
-                          ? 'bg-gradient-to-r from-transparent via-yellow-400/10 to-transparent'
-                          : insight.type === 'success'
-                            ? 'bg-gradient-to-r from-transparent via-emerald-400/10 to-transparent'
-                            : 'bg-gradient-to-r from-transparent via-blue-400/10 to-transparent'
+                        ? 'bg-gradient-to-r from-transparent via-yellow-400/10 to-transparent'
+                        : insight.type === 'success'
+                          ? 'bg-gradient-to-r from-transparent via-emerald-400/10 to-transparent'
+                          : 'bg-gradient-to-r from-transparent via-blue-400/10 to-transparent'
                         }`}
                     />
 
@@ -235,18 +237,41 @@ const MasterCard = () => {
                     >
                       <Icon className={`w-5 h-5 mb-3 ${ui.iconColor}`} />
                     </motion.div>
-
-                    <div className="text-sm text-gray-300 leading-relaxed relative z-10">
-                      {insight.message}
+                    {/* ***************2ND IDEA********************* */}
+                    <div className="relative z-10 space-y-3">
+                      <p className="text-sm text-gray-300 leading-relaxed">
+                        {insight.message}
+                      </p>
+                      <div className="flex items-center gap-2 pt-2 border-t border-gray-700/50">
+                        <div className="flex items-baseline gap-1">
+                          <span className="text-2xl font-bold text-yellow-400">
+                            {insight.meta.anomalyDays}
+                          </span>
+                          <span className="text-xs text-gray-300">
+                            unusual days detected
+                          </span>
+                        </div>
+                      </div>
                     </div>
+                    <button
+                      className="cursor-pointer absolute bottom-3 right-3 text-md text-blue-400 hover:text-blue-300 flex items-center gap-1 transition-colors z-20"
+                    >
+                      <span>More info</span>
+                      <ChevronRight className="w-3 h-3" />
+                    </button>
+                  {/* ************************************************ */}
                   </motion.div>
-                );  
+                );
               })}
               </motion.div>
             )}
           </AnimatePresence>
         </div>
       </motion.div>
+       <InsightModal
+      insight={selectedInsight}
+      onClose={() => setSelectedInsight(null)}
+    />
     </div>
   )
 }

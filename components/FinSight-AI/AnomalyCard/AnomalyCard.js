@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '@/context/AuthContext';
 import { AlertTriangle } from 'lucide-react';
 
-const AnomalyCard = ({onInsight}) => {
+const AnomalyCard = ({ onInsight }) => {
     const { user } = useContext(AuthContext);
     const [message, setMessage] = useState(null);
 
@@ -30,37 +30,43 @@ const AnomalyCard = ({onInsight}) => {
 
                 console.log(data);
                 const { anomalies, anomaly_days, average_expense } = data;
+
                 if (average_expense < 500) return;
 
-                const meaningful = anomalies.filter(day =>
-                    Math.abs(day.amount - average_expense) >= 0.25 * average_expense
-                );
+                // const meaningful = anomalies.filter(day =>
+                //     Math.abs(day.amount - average_expense) >= 0.25 * average_expense
+                // );
+                const meaningful=anomalies;
 
                 if (meaningful.length === 0) {
                     onInsight({
                         type: "success",
                         message: "Your spending looks consistent with your usual pattern",
                         icon: AlertTriangle,
-                        priority: "low"
+                        meta:null,
                     });
                     return;
                 }
 
                 const text =
                     meaningful.length > 3
-                        ? "Your spending has been more variable on several days recently"
+                        ? `Your spending has been more variable on several days recently.`
                         : `We noticed ${meaningful.length} day${meaningful.length > 1 ? "s" : ""
                         } with unusually high spending`;
 
                 onInsight({
                     type: "warning",
                     message: text,
-                    // icon: AlertTriangle,
+                    meta: {
+                        anomalyDays: anomaly_days,
+                        anomalies: meaningful,
+                        averageExpense: average_expense
+                    },
                     priority: "high"
                 });
 
             } catch (e) {
-                console.log("Anomaly Insights failed",e);
+                console.log("Anomaly Insights failed", e);
             }
         }
 
